@@ -18,7 +18,7 @@
     <NuGetPackageDir>$(BuildSolutionDir)/NuGet/</NuGetPackageDir>
     <NuGetBasePath>$(MSBuildProjectDirectory)</NuGetBasePath>
     <NuGetPackageLibDir>$(BuildSolutionDir)/NuGet/lib</NuGetPackageLibDir>
-    <NuGetPackageDescription>$(BuildSolutionDir)/NuGet/servicestack.text.nuspec</NuGetPackageDescription>
+    <NuGetPackageDescription>$(BuildSolutionDir)/NuGet/ServiceStack.Text/servicestack.text.nuspec</NuGetPackageDescription>
     <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</Version>
     <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</PackageVersion>
     <EnvVersion>$(MajorVersion).$(MinorVersion)$(PatchVersion)</EnvVersion>
