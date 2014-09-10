@@ -3,21 +3,20 @@
     xmlns='http://schemas.microsoft.com/developer/msbuild/2003' ToolsVersion="4.0">
   <Import Project="$(MSBuildProjectDirectory)/Build.tasks" />
 
-  <PropertyGroup>
+    <PropertyGroup>
         <MajorVersion>3</MajorVersion>
         <MinorVersion>9</MinorVersion>
         <PatchVersion>$(PATCH_NUMBER)</PatchVersion>
 	<BuildVersion>$(BUILD_COUNTER)</BuildVersion>
-  </PropertyGroup>
+    </PropertyGroup>
 
   <PropertyGroup>
     <BuildSolutionDir>$(MSBuildProjectDirectory)/..</BuildSolutionDir>
     <SourcesDir>$(BuildSolutionDir)/src</SourcesDir>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <NuGetPath>$(BuildSolutionDir)/src/.nuget/nuget.exe</NuGetPath>
-    <NuGetPackageDir>$(BuildSolutionDir)/NuGet/</NuGetPackageDir>
+    <NuGetPackageDir>$(BuildSolutionDir)/NuGet/ServiceStack.Text/</NuGetPackageDir>
     <NuGetBasePath>$(MSBuildProjectDirectory)</NuGetBasePath>
-    <NuGetPackageLibDir>$(BuildSolutionDir)/NuGet/lib</NuGetPackageLibDir>
     <NuGetPackageDescription>$(BuildSolutionDir)/NuGet/ServiceStack.Text/servicestack.text.nuspec</NuGetPackageDescription>
     <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</Version>
     <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</PackageVersion>
@@ -51,9 +50,9 @@
 
   <Target Name="BuildSolutions">
     <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.Text.sln" Targets="Build"
-      Properties="Configuration=$(Configuration)" />
+   Properties="Configuration=$(Configuration)" />
     <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.Text.Net40/ServiceStack.Text.Net40.sln" Targets="Build"
-      Properties="Configuration=$(Configuration)" />
+   Properties="Configuration=$(Configuration)" />
   </Target>
 
   <Target Name="NuGetPack">
@@ -88,7 +87,7 @@
 
     <MakeDir Directories="$(NuGetPackageDir)/ServiceStack.Text/lib/sl5" Condition="!Exists('$(NuGetPackageDir)/ServiceStack.Text/lib/sl5')" />
     <Copy SourceFiles="%(TextSl5Files.Identity)" DestinationFolder="$(NuGetPackageDir)/ServiceStack.Text/lib/sl5" />
- 
+
     <Exec Command="&quot;$(NuGetPath)&quot; pack &quot;$(NuGetPackageDescription)&quot; -OutputDirectory &quot;$(NuGetPackageDir)&quot; -Version $(PackageVersion)"
             LogStandardErrorAsError="true" />
 
