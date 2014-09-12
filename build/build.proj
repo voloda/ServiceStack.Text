@@ -15,11 +15,12 @@
     <SourcesDir>$(BuildSolutionDir)/src</SourcesDir>
     <Configuration Condition="$(Configuration) == ''">Release</Configuration>
     <NuGetPath>$(BuildSolutionDir)/src/.nuget/nuget.exe</NuGetPath>
-    <NuGetPackageDir>$(BuildSolutionDir)/NuGet/ServiceStack.Text/</NuGetPackageDir>
+    <NuGetPackageDir>$(BuildSolutionDir)/NuGet/</NuGetPackageDir>
     <NuGetBasePath>$(MSBuildProjectDirectory)</NuGetBasePath>
     <NuGetPackageDescription>$(BuildSolutionDir)/NuGet/ServiceStack.Text/servicestack.text.nuspec</NuGetPackageDescription>
+    <NuGetPackageLibDir>$(BuildSolutionDir)/NuGet/ServiceStack.Text/lib</NuGetPackageLibDir>
     <Version>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</Version>
-    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)</PackageVersion>
+    <PackageVersion>$(MajorVersion).$(MinorVersion).$(PatchVersion).$(BuildVersion)$(UnstableTag)</PackageVersion>
     <EnvVersion>$(MajorVersion).$(MinorVersion)$(PatchVersion)</EnvVersion>
   </PropertyGroup>
 
@@ -76,13 +77,13 @@
 
     <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.Text/ServiceStack.Text.csproj"
              Targets="Build"
-             Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageDir)/lib/net35;Configuration=$(Configuration)" />
+             Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageLibDir)/net35;Configuration=$(Configuration)" />
 
     <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.Text.Net40/ServiceStack.Text.Net40.csproj"
              Targets="Build"
-             Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageDir)/lib/net40;Configuration=$(Configuration)" />
+             Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageLibDir)/net40;Configuration=$(Configuration)" />
 
-    <MSBuild Projects="..\..\SignFiles.msbuild" Properties="BuildID=Text" Targets="RunSignFiles" />
+    <MSBuild Projects="..\..\SignFiles.msbuild" Properties="BuildID=Text;LibDir=$(NuGetPackageLibDir)" Targets="RunSignFiles" />
 
     <Exec Command="&quot;$(NuGetPath)&quot; pack &quot;$(NuGetPackageDescription)&quot; -OutputDirectory &quot;$(NuGetPackageDir)&quot; -Version $(PackageVersion)"
             LogStandardErrorAsError="true" />
