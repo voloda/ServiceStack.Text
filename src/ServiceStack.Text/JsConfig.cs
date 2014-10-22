@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using ServiceStack.Text.Common;
@@ -836,8 +837,84 @@ namespace ServiceStack.Text
     }
 #endif
 
+    /// <summary>
+    /// Defines an interface for a callback implementation 
+    /// being invoked as a part of first initialization of <see cref="JsConfig{T}"/> for every type.
+    /// </summary>
+    /// <remarks>
+    /// This is the way how to hook the default configuration in a generic
+    /// way and provide application wide behavior override if/as needed.
+    /// </remarks>
+    public interface IJsDefaultConfigCallback
+    {
+        /// <summary>
+        /// Strongly typed callback which will be invoked
+        /// </summary>
+        /// <typeparam name="T">Type according to <see cref="JsConfig{T}"/></typeparam>
+        void Callback<T>();
+    }
+    
+    /// <summary>
+    /// Setup of the <see cref="JsConfig{T}"/> interceptor
+    /// </summary>
+    public static class JsConfigDefaultCallback
+    {
+        class NullJsDefaultConfigCallback : IJsDefaultConfigCallback
+        {
+            public void Callback<T>()
+            {
+                Debug.WriteLine(typeof(T).FullName);
+            }
+        }
+
+        internal static IJsDefaultConfigCallback JsConfigCallback = CreateNullCallback();
+
+        private static NullJsDefaultConfigCallback CreateNullCallback()
+        {
+            return new NullJsDefaultConfigCallback();
+        }
+
+        /// <summary>
+        /// Set a new interceptor
+        /// </summary>
+        /// <remarks>
+        /// Only one interceptor can be active for single thread.
+        /// </remarks>
+        /// <remarks>
+        /// <para>
+        /// Register an instance if you would get notification about first setup of every type.
+        /// </para>
+        /// <para>
+        /// Setting a new callback will not make the callback being called again for already configured types.
+        /// </para>
+        /// </remarks>
+        /// <param name="callback">Registered callback. If <c>null</c> then callback will be disabled</param>
+        public static void Register(IJsDefaultConfigCallback callback)
+        {
+            JsConfigCallback = callback ?? CreateNullCallback();
+        }
+
+        /// <summary>
+        /// Reset interception
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// Setting a new callback will not make the callback being called again for already configured types.
+        /// </para>
+        /// </remarks>
+        public static void Reset()
+        {
+            Register(null);
+        }
+    }
+
     public class JsConfig<T>
     {
+        static JsConfig()
+        {
+            JsConfigDefaultCallback.JsConfigCallback.Callback<T>();
+        }
+
         /// <summary>
         /// Always emit type info for this type.  Takes precedence over ExcludeTypeInfo
         /// </summary>
