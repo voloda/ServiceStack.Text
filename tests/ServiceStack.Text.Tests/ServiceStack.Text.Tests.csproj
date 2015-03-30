@@ -32,6 +32,10 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,25 +104,8 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack">
-      <HintPath>..\..\lib\tests\ServiceStack.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Client">
-      <HintPath>..\..\lib\tests\ServiceStack.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\..\lib\tests\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common.Tests, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\ServiceStack.Common.Tests.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\..\lib\tests\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.ServiceInterface, Version=1.0.4320.41287, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\ServiceStack.ServiceInterface.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\..\ServiceStack\lib\tests\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -142,26 +129,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Northwind.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\Northwind.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Platform, Version=1.0.0.341, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net, Version=1.0.0.278, Culture=neutral, PublicKeyToken=257b51d87d2e4d67">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net.Extensions, Version=1.0.0.278, Culture=neutral, PublicKeyToken=257b51d87d2e4d67">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\tests\protobuf-net.Extensions.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HashSetTests.cs" />
@@ -189,8 +156,6 @@
     <Compile Include="JsonTests\CustomRawSerializerTests.cs" />
     <Compile Include="JsonTests\CustomSerializerTests.cs" />
     <Compile Include="JsonTests\CamelCaseTests.cs" />
-    <Compile Include="CsvSerializerTests.cs" />
-    <Compile Include="CsvStreamTests.cs" />
     <Compile Include="CsvTests\CustomHeaderTests.cs" />
     <Compile Include="JsonTests\ContractByInterfaceTests.cs" />
     <Compile Include="JsonTests\DictionaryTests.cs" />
@@ -226,8 +191,6 @@
     <Compile Include="GenericCollectionTests.cs" />
     <Compile Include="JsonTests\BasicJsonTests.cs" />
     <Compile Include="JsonTests\EscapedCharsTests.cs" />
-    <Compile Include="JsonTests\JsonDataContractCompatibilityTests.cs" />
-    <Compile Include="JsvTests\TypeSerializerToStringDictionaryTests.cs" />
     <Compile Include="QueryStringSerializerTests.cs" />
     <Compile Include="SpecialTypesTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
@@ -260,13 +223,8 @@
     <Compile Include="QueryStringWriterTests.cs" />
     <Compile Include="ReflectionExtensionTests.cs" />
     <Compile Include="ReportedIssues.cs" />
-    <Compile Include="DataTests.cs" />
-    <Compile Include="StringSerializerNorthwindDatabaseTests.cs" />
-    <Compile Include="StringSerializerTests.cs" />
-    <Compile Include="StringSerializerTranslationTests.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="TypeConverterTests.cs" />
-    <Compile Include="XmlSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -286,13 +244,37 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ServiceStack.Text\ServiceStack.Text.csproj">
-      <Project>{579B3FDB-CDAD-44E1-8417-885C38E49A0E}</Project>
-      <Name>ServiceStack.Text</Name>
-    </ProjectReference>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+    <ProjectReference Include="..\..\..\ServiceStack.OrmLite\src\ServiceStack.OrmLite\ServiceStack.OrmLite.csproj">
+      <Project>{96179ac6-f6f1-40c3-9fdd-4f6582f54c5c}</Project>
+      <Name>ServiceStack.OrmLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ServiceStack\src\ServiceStack.Common\ServiceStack.Common.csproj">
+      <Project>{982416db-c143-4028-a0c3-cf41892d18d3}</Project>
+      <Name>ServiceStack.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ServiceStack\src\ServiceStack.Interfaces\ServiceStack.Interfaces.csproj">
+      <Project>{42e1c8c0-a163-44cc-92b1-8f416f2c0b01}</Project>
+      <Name>ServiceStack.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ServiceStack\src\ServiceStack.ServiceInterface\ServiceStack.ServiceInterface.csproj">
+      <Project>{5a315f92-80d2-4c60-a5a4-22e027ac7e7e}</Project>
+      <Name>ServiceStack.ServiceInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ServiceStack\src\ServiceStack\ServiceStack.csproj">
+      <Project>{680a1709-25eb-4d52-a87f-ee03ffd94baa}</Project>
+      <Name>ServiceStack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ServiceStack\tests\ServiceStack.Common.Tests\ServiceStack.Common.Tests.csproj">
+      <Project>{3fa9197a-462d-44cc-9ab3-61af414d0b45}</Project>
+      <Name>ServiceStack.Common.Tests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\ServiceStack.Text\ServiceStack.Text.csproj">
+      <Project>{579b3fdb-cdad-44e1-8417-885c38e49a0e}</Project>
+      <Name>ServiceStack.Text</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

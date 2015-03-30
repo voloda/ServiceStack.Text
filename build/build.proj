@@ -79,9 +79,6 @@
              Targets="Build"
              Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageLibDir)/net35;Configuration=$(Configuration)" />
 
-    <MakeDir Directories="$(NuGetPackageDir)/ServiceStack.Text/lib/net35" Condition="!Exists('$(NuGetPackageDir)/ServiceStack.Text/lib/net35')" />
-    <Copy SourceFiles="%(TextFiles.Identity)" DestinationFolder="$(NuGetPackageDir)/ServiceStack.Text/lib/net35" />
-    
     <MSBuild Projects="$(BuildSolutionDir)/src/ServiceStack.Text.Net40/ServiceStack.Text.Net40.csproj"
              Targets="Build"
              Properties="BuildPackage=true;Version=$(PackageVersion);OutputPath=$(NuGetPackageLibDir)/net40;Configuration=$(Configuration)" />

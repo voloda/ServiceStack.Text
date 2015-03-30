@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+#if SSCLIENT
 using ServiceStack.Client;
+#endif
 using ServiceStack.Text.Tests.Support;
 
 namespace ServiceStack.Text.Tests
@@ -9,6 +11,7 @@ namespace ServiceStack.Text.Tests
 	[TestFixture]
 	public class StringTests
 	{
+#if SSCLIENT
 		[Test]
 		public void SerializerTests()
 		{
@@ -97,8 +100,9 @@ namespace ServiceStack.Text.Tests
             Assert.That(fromJson, Is.EqualTo(original));
             Assert.That(fromJsonType, Is.EqualTo(original));
         }
+#endif
 
-	    public class Poco
+        public class Poco
         {
             public string Name { get; set; }
         }

@@ -5,9 +5,11 @@ using System.Linq;
 using NUnit.Framework;
 #if !MONOTOUCH
 using System.ComponentModel.DataAnnotations;
-using Northwind.Common.ComplexModel;
 using ServiceStack.Common.Extensions;
 using ServiceStack.Common.Tests.Models;
+#endif
+#if !MONOTOUCH && NORTHWIND
+using Northwind.Common.ComplexModel;
 #endif
 using ServiceStack.Text.Common;
 
@@ -543,6 +545,7 @@ namespace ServiceStack.Text.Tests
 			//ModelWithMapAndList.AssertIsEqual(toModel, model);
 		}
 
+#if NORTHWIND
 		[Test]
 		public void Can_convert_ArrayDtoWithOrders()
 		{
@@ -551,6 +554,7 @@ namespace ServiceStack.Text.Tests
 
 			Assert.That(model.Equals(toModel), Is.True);
 		}
+#endif
 
 		[Test]
 		public void Can_convert_Field_Map_or_List_with_invalid_chars()
@@ -582,6 +586,7 @@ namespace ServiceStack.Text.Tests
 				Serialize(instance);
 			}
 		}
+        #if NORTHWIND
 
 		[Test]
 		public void Can_convert_CustomerDto()
@@ -600,6 +605,7 @@ namespace ServiceStack.Text.Tests
 
 			Assert.That(model.Equals(toModel), Is.True);
 		}
+#endif
 
 		[Test]
 		public void Can_convert_List_Guid()

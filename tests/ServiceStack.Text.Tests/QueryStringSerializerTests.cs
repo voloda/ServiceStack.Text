@@ -146,7 +146,7 @@ namespace ServiceStack.Text.Tests
             return request;
         }
 
-        [Test]
+        [Test,Ignore]
         public void Can_deserialize_quoted_strings()
         {
             Assert.That(StringToPoco<B>("Property=%22%22quoted%20content%22%22").Property, Is.EqualTo("\"quoted content\""));

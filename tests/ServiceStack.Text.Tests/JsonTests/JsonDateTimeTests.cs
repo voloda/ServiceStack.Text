@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using NUnit.Framework;
-#if !MONOTOUCH
+#if !MONOTOUCH && SSCLIENT
 using ServiceStack.Client;
 #endif
 
@@ -179,7 +179,7 @@ namespace ServiceStack.Text.Tests.JsonTests
 			JsConfig.Reset();
 		}
 
-#if !__MonoCS__
+#if !__MonoCS__ && SSCLIENT
 		[Test]
 		public void Can_serialize_json_date_dcjsCompatible_local()
 		{
@@ -207,8 +207,8 @@ namespace ServiceStack.Text.Tests.JsonTests
 		}
 #endif
 
-#if !MONOTOUCH
-		[Test]
+#if !MONOTOUCH && SSCLIENT
+        [Test]
 		public void Can_deserialize_json_date_dcjsCompatible_utc()
 		{
 			JsConfig.DateHandler = JsonDateHandler.DCJSCompatible;
@@ -279,9 +279,9 @@ namespace ServiceStack.Text.Tests.JsonTests
             JsConfig.Reset();
         }
 #endif
-		#endregion
+        #endregion
 
-		#region ISO-8601 Tests
+        #region ISO-8601 Tests
         [Test]
         public void When_using_ISO8601_and_serializing_as_Utc_It_should_deserialize_as_Utc()
         {
